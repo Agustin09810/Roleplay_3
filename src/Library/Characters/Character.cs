@@ -1,30 +1,40 @@
 using System.Collections.Generic;
 namespace RoleplayGame
+
 {
-    public class Archer: ICharacter
+    public abstract class Character : ICharacter
     {
-        private int health = 100;
-
-        private List<IItem> items = new List<IItem>();
-
-        public Archer(string name)
+        public Character (string name)
         {
             this.Name = name;
-            
-            this.AddItem(new Bow());
-            this.AddItem(new Helmet());
         }
 
-        public string Name { get; set; }
-        
-        public int AttackValue
+        //para la parte 3, de encuentros, es necesario saber cuando el personaje está muerto
+        public bool Muerto
+        {
+            get
+            {
+                return Health == 0;
+            }
+        }
+        public abstract int PuntosdeVictoria {get;}
+
+        public virtual void PuntosGanados(int puntos)
+        {
+        }
+
+        public string Name {get; set;}
+
+        protected List<IItem> items = new List<IItem>();
+
+        public virtual int AttackValue 
         {
             get
             {
                 int value = 0;
                 foreach (IItem item in this.items)
                 {
-                    if (item is IAttackItem)
+                   if (item is IAttackItem)
                     {
                         value += (item as IAttackItem).AttackValue;
                     }
@@ -32,8 +42,7 @@ namespace RoleplayGame
                 return value;
             }
         }
-
-        public int DefenseValue
+         public virtual int DefenseValue
         {
             get
             {
@@ -48,21 +57,20 @@ namespace RoleplayGame
                 return value;
             }
         }
-
-        public int Health
+        public virtual int Health
         {
             get
             {
-                return this.health;
+                return this.Health;
             }
-            private set
+            protected set
             {
-                this.health = value < 0 ? 0 : value;
+                this.Health = value < 0 ? 0 : value;
             }
         }
-
-        public void ReceiveAttack(int power)
-        {
+        
+        public virtual void ReceiveAttack(int power)
+        {   
             if (this.DefenseValue < power)
             {
                 this.Health -= power - this.DefenseValue;
@@ -83,5 +91,6 @@ namespace RoleplayGame
         {
             this.items.Remove(item);
         }
+
     }
 }
