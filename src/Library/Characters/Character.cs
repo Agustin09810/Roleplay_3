@@ -9,12 +9,25 @@ namespace RoleplayGame
             this.Name = name;
         }
 
+        //para la parte 3, de encuentros, es necesario saber cuando el personaje está muerto
+        public bool Muerto
+        {
+            get
+            {
+                return Health == 0;
+            }
+        }
+        public abstract int PuntosdeVictoria {get;}
+
+        public virtual void PuntosGanados(int puntos)
+        {
+        }
 
         public string Name {get; set;}
 
-        private List<IItem> items = new List<IItem>();
+        protected List<IItem> items = new List<IItem>();
 
-        public int AttackValue 
+        public virtual int AttackValue 
         {
             get
             {
@@ -29,7 +42,7 @@ namespace RoleplayGame
                 return value;
             }
         }
-         public int DefenseValue
+         public virtual int DefenseValue
         {
             get
             {
@@ -44,19 +57,19 @@ namespace RoleplayGame
                 return value;
             }
         }
-        public int Health
+        public virtual int Health
         {
             get
             {
                 return this.Health;
             }
-            private set
+            protected set
             {
                 this.Health = value < 0 ? 0 : value;
             }
         }
         
-        public void ReceiveAttack(int power)
+        public virtual void ReceiveAttack(int power)
         {   
             if (this.DefenseValue < power)
             {

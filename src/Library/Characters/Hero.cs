@@ -7,7 +7,7 @@ namespace RoleplayGame
         }
         int VictoryPoints = 0;
 
-        public int Victory_Points
+        public override int PuntosdeVictoria
         {
             get
             {
@@ -16,9 +16,16 @@ namespace RoleplayGame
         }
 
         //metodo que aumenta los puntos de victoria de un personaje
-        public void PuntosGanados(int puntos)
+        public override void PuntosGanados(int puntos)
         {
             this.VictoryPoints += puntos;
+        }
+
+        //en la parte 3, los héroes se curan al obtener 5 victory points
+        public void Heal()
+        {
+            this.Cure();
+            this.VictoryPoints -= 5;
         }
     }
 }

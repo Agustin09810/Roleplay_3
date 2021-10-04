@@ -6,6 +6,9 @@ namespace RoleplayGame
         {
 
         }
+
+        public override int PuntosdeVictoria{get; }
+
         
     }
 }
